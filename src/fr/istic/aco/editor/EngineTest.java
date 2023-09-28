@@ -27,26 +27,61 @@ class EngineTest {
 
     @Test
     void getBufferContents() {
-        todo();
+        Selection selection = engine.getSelection();
+        engine.insert("abcd");
+        assertEquals("abcd",engine.getBufferContents());
     }
 
     @Test
     void getClipboardContents() {
-        todo();
+        Selection selection = engine.getSelection();
+        engine.insert("abcd");
+        selection.setBeginIndex(1);
+        selection.setEndIndex(3);
+        engine.copySelectedText();
+        assertEquals("bc",engine.getClipboardContents());
     }
 
     @Test
     void cutSelectedText() {
-        todo();
+        Selection selection = engine.getSelection();
+        engine.insert("abcd");
+        selection.setBeginIndex(1);
+        selection.setEndIndex(3);
+        engine.cutSelectedText();
+        assertEquals("ad",engine.getBufferContents());
     }
 
     @Test
     void copySelectedText() {
-        todo();
+        Selection selection = engine.getSelection();
+        engine.insert("abcd");
+        selection.setBeginIndex(1);
+        selection.setEndIndex(3);
+        engine.copySelectedText();
+        assertEquals("bc",engine.getClipboardContents());
     }
 
     @Test
     void pasteClipboard() {
-        todo();
+        Selection selection = engine.getSelection();
+        engine.insert("abcd");
+        selection.setBeginIndex(1);
+        selection.setEndIndex(3);
+        engine.copySelectedText();
+        selection.setBeginIndex(3);
+        selection.setEndIndex(3);
+        engine.pasteClipboard();
+        assertEquals("abcbcd",engine.getBufferContents());
+    }
+
+    @Test
+    void deleteSelectedText() {
+        Selection selection = engine.getSelection();
+        engine.insert("abcd");
+        selection.setBeginIndex(1);
+        selection.setEndIndex(3);
+        engine.delete();
+        assertEquals("ad",engine.getBufferContents());
     }
 }

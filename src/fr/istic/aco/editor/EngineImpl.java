@@ -1,6 +1,11 @@
 package fr.istic.aco.editor;
 
 public class EngineImpl implements Engine {
+
+    private StringBuilder buffer = new StringBuilder();
+    private String clipboard;
+    private final Selection selection = new SelectionImpl(buffer);
+
     /**
      * Provides access to the selection control object
      *
@@ -8,8 +13,7 @@ public class EngineImpl implements Engine {
      */
     @Override
     public Selection getSelection() {
-        // TODO
-        return null;
+        return selection;
     }
 
     /**
@@ -19,8 +23,7 @@ public class EngineImpl implements Engine {
      */
     @Override
     public String getBufferContents() {
-        // TODO
-        return null;
+        return buffer.toString();
     }
 
     /**
@@ -30,8 +33,7 @@ public class EngineImpl implements Engine {
      */
     @Override
     public String getClipboardContents() {
-        // TODO
-        return null;
+        return clipboard;
     }
 
     /**
@@ -41,7 +43,9 @@ public class EngineImpl implements Engine {
      */
     @Override
     public void cutSelectedText() {
-        // TODO
+        int begin = selection.getBeginIndex();
+        int end = selection.getEndIndex();
+        buffer.delete(begin, end);
     }
 
     /**
@@ -51,7 +55,9 @@ public class EngineImpl implements Engine {
      */
     @Override
     public void copySelectedText() {
-        // TODO
+        int begin = selection.getBeginIndex();
+        int end = selection.getEndIndex();
+        clipboard = buffer.substring(begin, end);
     }
 
     /**
@@ -60,7 +66,9 @@ public class EngineImpl implements Engine {
      */
     @Override
     public void pasteClipboard() {
-        // TODO
+        int begin = selection.getBeginIndex();
+        int end = selection.getEndIndex();
+        buffer.replace(begin, end, clipboard);
     }
 
     /**
@@ -70,7 +78,7 @@ public class EngineImpl implements Engine {
      */
     @Override
     public void insert(String s) {
-
+        this.buffer = new StringBuilder(s);
     }
 
     /**
@@ -78,6 +86,8 @@ public class EngineImpl implements Engine {
      */
     @Override
     public void delete() {
-
+        int begin = selection.getBeginIndex();
+        int end = selection.getEndIndex();
+        buffer.delete(begin, end);
     }
 }

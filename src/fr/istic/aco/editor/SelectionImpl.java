@@ -4,11 +4,11 @@ public class SelectionImpl implements Selection{
     private StringBuilder buffer;
     private int beginIndex;
     private int endIndex;
-    private int bufferBeginIndex;
-    private int bufferEndIndex;
+    private final int bufferBeginIndex;
 
     public SelectionImpl(StringBuilder buffer) {
         this.buffer = buffer;
+        this.bufferBeginIndex = 0;
     }
 
     @Override
@@ -28,16 +28,24 @@ public class SelectionImpl implements Selection{
 
     @Override
     public int getBufferEndIndex() {
-        return bufferEndIndex;
+        return buffer.length();
     }
 
     @Override
     public void setBeginIndex(int beginIndex) {
-        this.beginIndex = beginIndex;
+        if (beginIndex >= bufferBeginIndex && beginIndex <= endIndex) {
+            this.beginIndex = beginIndex;
+        } else {
+            throw new RuntimeException("L'index de départ du buffer est inférieur à l'index minimum");
+        }
     }
 
     @Override
     public void setEndIndex(int endIndex) {
-        this.endIndex = endIndex;
+        if (endIndex <= buffer.length() && endIndex >= beginIndex) {
+            this.endIndex = endIndex;
+        } else {
+            throw new RuntimeException("L'index de fin du buffer est supérieur à l'index maximum");
+        }
     }
 }

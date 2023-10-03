@@ -1,5 +1,6 @@
 package fr.istic.aco.editor;
 
+import org.junit.Assert;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -50,6 +51,7 @@ class EngineTest {
         selection.setEndIndex(3);
         engine.cutSelectedText();
         assertEquals("ad",engine.getBufferContents());
+        assertEquals(selection.getBeginIndex(), selection.getEndIndex());
     }
 
     @Test
@@ -73,6 +75,8 @@ class EngineTest {
         selection.setEndIndex(3);
         engine.pasteClipboard();
         assertEquals("abcbcd",engine.getBufferContents());
+        assertEquals(selection.getEndIndex(), selection.getBeginIndex() + engine.getClipboardContents().length());
+
     }
 
     @Test
@@ -83,5 +87,28 @@ class EngineTest {
         selection.setEndIndex(3);
         engine.delete();
         assertEquals("ad",engine.getBufferContents());
+        assertEquals(selection.getBeginIndex(), selection.getEndIndex());
+    }
+
+    @Test
+    void wrongBeginIndexTest() {
+        Selection selection = engine.getSelection();
+        engine.insert("123456");
+        assertThrows(RuntimeException.class, () -> selection.setBeginIndex(-1));
+    }
+
+    @Test
+    void wrongEndIndexTest() {
+        Selection selection = engine.getSelection();
+        engine.insert("123456");
+        assertThrows(RuntimeException.class, () -> selection.setEndIndex(8));
+    }
+
+    @Test
+    void wrongIndexOrderTest() {
+        Selection selection = engine.getSelection();
+        engine.insert("123456");
+        selection.setEndIndex(3);
+        assertThrows(RuntimeException.class, () -> selection.setBeginIndex(4));
     }
 }

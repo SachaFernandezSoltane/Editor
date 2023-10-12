@@ -1,6 +1,5 @@
-package fr.istic.aco.editor;
+package fr.istic.aco.editor.receiver;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -23,6 +22,7 @@ class EngineTest {
     void getSelection() {
         Selection selection = engine.getSelection();
         assertEquals(selection.getBufferBeginIndex(),selection.getBeginIndex());
+        assertEquals(selection.getBufferEndIndex(), selection.getEndIndex());
         assertEquals("",engine.getBufferContents());
     }
 

@@ -1,9 +1,14 @@
 package fr.istic.aco.editor.concretecommand;
 
+import fr.istic.aco.editor.command.Command;
+import fr.istic.aco.editor.invoker.Invoker;
 import fr.istic.aco.editor.receiver.EngineImpl;
 import fr.istic.aco.editor.receiver.Selection;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
 
@@ -24,8 +29,12 @@ public class ConcreteCommandTest {
     @Test
     public void testInsert(){
         EngineImpl engine = new EngineImpl();
-        Insert insert = new Insert(engine, "Test");
-        insert.execute();
+        Map<String, Command> stp = new HashMap<>();
+
+        Invoker invoker = new Invoker(stp);
+        stp.put("insert", new Insert(engine, "Test"));
+        invoker.playCommand("insert");
+
         assertEquals("Test", engine.getBufferContents());
     }
 

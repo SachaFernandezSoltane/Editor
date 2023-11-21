@@ -1,5 +1,6 @@
 package fr.istic.aco.editor.receiver;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -9,7 +10,7 @@ class EngineTest {
 
     private Engine engine;
 
-    @org.junit.jupiter.api.BeforeEach
+    @BeforeEach
     void setUp() {
         engine = new EngineImpl();
     }

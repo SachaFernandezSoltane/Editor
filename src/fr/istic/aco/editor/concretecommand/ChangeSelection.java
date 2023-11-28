@@ -2,7 +2,6 @@ package fr.istic.aco.editor.concretecommand;
 
 import fr.istic.aco.editor.command.Command;
 import fr.istic.aco.editor.invoker.Invoker;
-import fr.istic.aco.editor.receiver.EngineImpl;
 import fr.istic.aco.editor.receiver.Selection;
 
 public class ChangeSelection implements Command {

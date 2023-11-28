@@ -3,7 +3,7 @@ package fr.istic.aco.editor.receiver;
 public class EngineImpl implements Engine {
 
     private StringBuilder buffer = new StringBuilder();
-    private String clipboard;
+    private String clipboard = "";
     private final Selection selection = new SelectionImpl(buffer);
 
     /**
@@ -45,6 +45,7 @@ public class EngineImpl implements Engine {
     public void cutSelectedText() {
         int begin = selection.getBeginIndex();
         int end = selection.getEndIndex();
+        clipboard = buffer.substring(begin, end);
         buffer.delete(begin, end);
         selection.setEndIndex(begin);
     }

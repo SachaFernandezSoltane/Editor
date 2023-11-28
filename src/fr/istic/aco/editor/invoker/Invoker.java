@@ -1,4 +1,4 @@
-        package fr.istic.aco.editor.invoker;
+package fr.istic.aco.editor.invoker;
 
 import fr.istic.aco.editor.command.Command;
 
@@ -17,11 +17,11 @@ public class Invoker {
         this.m = m;
     }
 
-    public void addCommand(String nomC,Command command){
-        m.put(nomC,command);
+    public void addCommand(String nomC, Command command) {
+        m.put(nomC, command);
     }
 
-    public void playCommand(String nomC){
+    public void playCommand(String nomC) {
         Command c = m.get(nomC);
         c.execute();
     }

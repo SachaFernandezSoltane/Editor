@@ -1,6 +1,6 @@
 package fr.istic.aco.editor.receiver;
 
-public class SelectionImpl implements Selection{
+public class SelectionImpl implements Selection {
     private StringBuilder buffer;
     private int beginIndex;
     private int endIndex;

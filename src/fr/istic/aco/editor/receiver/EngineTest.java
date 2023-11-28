@@ -18,20 +18,21 @@ class EngineTest {
     private void todo() {
         fail("Unimplemented test");
     }
+
     @Test
     @DisplayName("Buffer must be empty after initialisation")
     void getSelection() {
         Selection selection = engine.getSelection();
-        assertEquals(selection.getBufferBeginIndex(),selection.getBeginIndex());
+        assertEquals(selection.getBufferBeginIndex(), selection.getBeginIndex());
         assertEquals(selection.getBufferEndIndex(), selection.getEndIndex());
-        assertEquals("",engine.getBufferContents());
+        assertEquals("", engine.getBufferContents());
     }
 
     @Test
     void getBufferContents() {
         Selection selection = engine.getSelection();
         engine.insert("abcd");
-        assertEquals("abcd",engine.getBufferContents());
+        assertEquals("abcd", engine.getBufferContents());
     }
 
     @Test
@@ -41,7 +42,7 @@ class EngineTest {
         selection.setBeginIndex(1);
         selection.setEndIndex(3);
         engine.copySelectedText();
-        assertEquals("bc",engine.getClipboardContents());
+        assertEquals("bc", engine.getClipboardContents());
     }
 
     @Test
@@ -51,7 +52,7 @@ class EngineTest {
         selection.setBeginIndex(1);
         selection.setEndIndex(3);
         engine.cutSelectedText();
-        assertEquals("ad",engine.getBufferContents());
+        assertEquals("ad", engine.getBufferContents());
         assertEquals(selection.getBeginIndex(), selection.getEndIndex());
     }
 
@@ -62,7 +63,7 @@ class EngineTest {
         selection.setBeginIndex(1);
         selection.setEndIndex(3);
         engine.copySelectedText();
-        assertEquals("bc",engine.getClipboardContents());
+        assertEquals("bc", engine.getClipboardContents());
     }
 
     @Test
@@ -75,7 +76,7 @@ class EngineTest {
         selection.setBeginIndex(3);
         selection.setEndIndex(3);
         engine.pasteClipboard();
-        assertEquals("abcbcd",engine.getBufferContents());
+        assertEquals("abcbcd", engine.getBufferContents());
         assertEquals(selection.getEndIndex(), selection.getBeginIndex() + engine.getClipboardContents().length());
 
     }
@@ -87,7 +88,7 @@ class EngineTest {
         selection.setBeginIndex(1);
         selection.setEndIndex(3);
         engine.delete();
-        assertEquals("ad",engine.getBufferContents());
+        assertEquals("ad", engine.getBufferContents());
         assertEquals(selection.getBeginIndex(), selection.getEndIndex());
     }
 

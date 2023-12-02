@@ -48,6 +48,38 @@ public class ConcreteCommandTest {
 
     @Test
     public void testPaste() {
+        invoker.setText("Oui");
+        invoker.playCommand("insert");
+        invoker.setBeginIndex(1);
+        invoker.setEndIndex(3);
+        invoker.playCommand("changeSelection");
+        invoker.playCommand("copy");
+        assertEquals("ui", engine.getClipboardContents());
+        invoker.setBeginIndex(0);
+        invoker.setEndIndex(0);
+        invoker.playCommand("changeSelection");
+        invoker.playCommand("paste");
+        assertEquals("uiOui", engine.getBufferContents());
+    }
+
+    @Test
+    public void testPaste_2() {
+        invoker.setText("Test");
+        invoker.playCommand("insert");
+        invoker.setBeginIndex(1);
+        invoker.playCommand("changeSelection");
+        invoker.playCommand("cut");
+        assertEquals("T", engine.getBufferContents());
+        assertEquals("est", engine.getClipboardContents());
+        invoker.setBeginIndex(0);
+        invoker.setEndIndex(0);
+        invoker.playCommand("changeSelection");
+        invoker.playCommand("paste");
+        assertEquals("estT", engine.getBufferContents());
+    }
+
+    @Test
+    public void testPaste_3() {
         invoker.setText("Test");
         invoker.playCommand("insert");
         invoker.setBeginIndex(1);
@@ -56,11 +88,11 @@ public class ConcreteCommandTest {
         invoker.playCommand("cut");
         assertEquals("Tt", engine.getBufferContents());
         assertEquals("es", engine.getClipboardContents());
+        invoker.setBeginIndex(0);
+        invoker.setEndIndex(1);
         invoker.playCommand("changeSelection");
         invoker.playCommand("paste");
-        assertEquals(3, invoker.getBeginIndex());
-        assertEquals(invoker.getBeginIndex(), invoker.getEndIndex());
-        assertEquals("Test", engine.getBufferContents());
+        assertEquals("est", engine.getBufferContents());
     }
 
     @Test

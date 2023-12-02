@@ -12,7 +12,6 @@ import java.util.Scanner;
 public class Ihm {
 
   private int beginIndex = 0;
-
   private int endIndex = 0;
   private Scanner scanner;
   private EngineImpl engine;
@@ -28,13 +27,13 @@ public class Ihm {
     mapCmd.put("changeSelection", new ChangeSelection(engine.getSelection(), invoker));
     mapCmd.put("insert", new Insert(engine, invoker));
     mapCmd.put("copy", new Copy(engine));
-    mapCmd.put("delete", new Delete(engine));
-    mapCmd.put("cut", new Cut(engine));
-    mapCmd.put("paste", new Paste(engine));
+    mapCmd.put("delete", new Delete(engine, invoker));
+    mapCmd.put("cut", new Cut(engine, invoker));
+    mapCmd.put("paste", new Paste(engine, invoker));
 
   }
 
-  public void start() { //TODO rajouter les états du clipboard, du buffer et des index.
+  public void start() { //TODO fix le souci d'insert avec plusieurs char déja sélectionnés.
     boolean choice = true;
 
     System.out.println("Bienvenue dans l'éditeur de texte !");
@@ -56,33 +55,71 @@ public class Ihm {
       String commande = scanner.nextLine();
       switch (commande) {
         case "s" -> {
+          String content;
+          boolean inputOk = false;
           System.out.println();
-          System.out.println("Quelle est la première borne de la sélection  :");
-          beginIndex = Integer.parseInt(scanner.nextLine());
+          System.out.println("Quelle est la première borne de la sélection (minimum 0, maximum " + engine.getBufferContents().length() + ") :");
+          content = scanner.nextLine();
+          while(!inputOk) {
+            try {
+              int contentAsInt = Integer.parseInt(content);
+              if (contentAsInt < 0 || contentAsInt > engine.getBufferContents().length()) {
+                System.out.println("Veuillez entrer un nombre valide !");
+                content = scanner.nextLine();
+              } else {
+                inputOk = true;
+                beginIndex = contentAsInt;
+              }
+            } catch (NumberFormatException e) {
+              System.out.println("Veuillez entrer un nombre valide !");
+              content = scanner.nextLine();
+            }
+          }
           System.out.println();
-          System.out.println("Quelle est la deuxième borne de la sélection  :");
-          endIndex = Integer.parseInt(scanner.nextLine());
+          System.out.println("Quelle est la deuxième borne de la sélection (minimum " + beginIndex + ", maximum " + engine.getBufferContents().length() + ") :");
+          inputOk = false;
+          content = scanner.nextLine();
+          while(!inputOk) {
+            try {
+              int contentAsInt = Integer.parseInt(content);
+              if (contentAsInt < beginIndex || contentAsInt > engine.getBufferContents().length()) {
+                System.out.println("Veuillez entrer un nombre valide !");
+                content = scanner.nextLine();
+              } else {
+                inputOk = true;
+                endIndex = contentAsInt;
+              }
+            } catch (NumberFormatException e) {
+              System.out.println("Veuillez entrer un nombre valide !");
+              content = scanner.nextLine();
+            }
+          }
           invoker.setBeginIndex(beginIndex);
           invoker.setEndIndex(endIndex);
           invoker.playCommand("changeSelection");
+          System.out.println("Bornes du contenu sélectionné : [" + invoker.getBeginIndex() + ";" + invoker.getEndIndex() + "]");
+          System.out.println("Contenu sélectionné : " + engine.getBufferContents().substring(beginIndex, endIndex));
         }
         case "v" -> {
           invoker.playCommand("paste");
           System.out.println("Contenu collé : " + engine.getBufferContents());
+          System.out.println("Position des bornes de sélection : [" + invoker.getBeginIndex() + ";" + invoker.getEndIndex() + "]");
         }
         case "c" -> {
           invoker.playCommand("copy");
           System.out.println("Contenu copié : " + engine.getClipboardContents());
+          System.out.println("Position des bornes de sélection : [" + invoker.getBeginIndex() + ";" + invoker.getEndIndex() + "]");
         }
         case "x" -> {
           invoker.playCommand("cut");
           System.out.println("Contenu restant : " + engine.getBufferContents());
           System.out.println("Contenu dans le presse papier : " + engine.getClipboardContents());
-
+          System.out.println("Position des bornes de sélection : [" + invoker.getBeginIndex() + ";" + invoker.getEndIndex() + "]");
         }
         case "d" -> {
           invoker.playCommand("delete");
           System.out.println("Nouveau contenu : " + engine.getBufferContents());
+          System.out.println("Position des bornes de sélection : [" + invoker.getBeginIndex() + ";" + invoker.getEndIndex() + "]");
         }
         case "i" -> {
           System.out.println();
@@ -90,7 +127,8 @@ public class Ihm {
           String txt = scanner.nextLine();
           invoker.setText(txt);
           invoker.playCommand("insert");
-          System.out.println("Contenu inséré : " + engine.getBufferContents());
+          System.out.println("Nouveau contenu : " + engine.getBufferContents());
+          System.out.println("Position des bornes de sélection : [" + invoker.getBeginIndex() + ";" + invoker.getEndIndex() + "]");
         }
         case "exit" -> {
           System.out.println("Sortie de l'éditeur...");

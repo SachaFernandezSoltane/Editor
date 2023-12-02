@@ -42,7 +42,7 @@ public class SelectionImpl implements Selection {
 
     @Override
     public void setEndIndex(int endIndex) {
-        if (endIndex <= buffer.length() && endIndex >= beginIndex) {
+        if (endIndex <= buffer.length()) {
             this.endIndex = endIndex;
         } else {
             throw new RuntimeException("L'index de fin du buffer est supérieur à l'index maximum");

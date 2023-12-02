@@ -18,5 +18,7 @@ public class Insert implements Command {
     @Override
     public void execute() {
         engine.insert(invoker.getText());
+        invoker.setBeginIndex(engine.getSelection().getBeginIndex());
+        invoker.setEndIndex(engine.getSelection().getEndIndex());
     }
 }

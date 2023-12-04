@@ -138,4 +138,15 @@ public class ConcreteCommandTest {
         assertEquals(1, engine.getSelection().getBeginIndex());
         assertEquals(2, engine.getSelection().getEndIndex());
     }
+
+    @Test
+    public void testInsertInSelection() {
+        invoker.setText("Test");
+        invoker.playCommand("insert");
+        invoker.setBeginIndex(1);
+        invoker.setEndIndex(2);
+        invoker.playCommand("changeSelection");
+        invoker.setText("TEST");
+        invoker.playCommand("insert");
+    }
 }

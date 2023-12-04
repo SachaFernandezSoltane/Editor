@@ -71,7 +71,7 @@ public class EngineImpl implements Engine {
         int begin = selection.getBeginIndex();
         int end = selection.getEndIndex();
         buffer.replace(begin, end, clipboard);
-        selection.setEndIndex(end + clipboard.length());
+        selection.setEndIndex(begin + clipboard.length());
         selection.setBeginIndex(selection.getEndIndex());
     }
 
@@ -85,7 +85,7 @@ public class EngineImpl implements Engine {
         int begin = selection.getBeginIndex();
         int end = selection.getEndIndex();
         buffer.replace(begin, end, s);
-        selection.setEndIndex(selection.getEndIndex() + s.length());
+        selection.setEndIndex(selection.getBeginIndex() + s.length());
         selection.setBeginIndex(selection.getEndIndex());
     }
     /**

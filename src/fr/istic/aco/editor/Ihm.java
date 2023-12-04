@@ -48,7 +48,7 @@ public class Ihm {
     System.out.println();
     System.out.println("Les commandes disponibles sont :");
     System.out.println();
-    System.out.println("i : insérer texte\ns : sélectionner texte\nc : copier sélection\nx : couper sélection\nd : supprimer sélection\nexit : sortie de l'éditeur");
+    System.out.println("i : insérer texte\ns : sélectionner texte\nc : copier sélection\nv : coller\nx : couper sélection\nd : supprimer sélection\nexit : sortie de l'éditeur");
     System.out.println();
 
     while (choice) {

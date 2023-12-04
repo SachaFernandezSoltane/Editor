@@ -1,4 +1,8 @@
 package fr.istic.aco.editor.concreteMemento;
 
-public class InsertMemento {
+import fr.istic.aco.editor.memento.Memento;
+
+public class InsertMemento implements Memento {
+
+    private String text;
 }

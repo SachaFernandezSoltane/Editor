@@ -1,4 +1,10 @@
 package fr.istic.aco.editor.concreteMemento;
 
-public class SelectionMemento {
+import fr.istic.aco.editor.memento.Memento;
+
+public class SelectionMemento implements Memento {
+
+    private int beginIndex;
+
+    private int endIndex;
 }

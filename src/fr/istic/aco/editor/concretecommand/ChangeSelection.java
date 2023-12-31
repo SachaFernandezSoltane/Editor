@@ -1,5 +1,6 @@
 package fr.istic.aco.editor.concretecommand;
 
+import fr.istic.aco.editor.caretaker.UndoManager;
 import fr.istic.aco.editor.concreteMemento.InsertMemento;
 import fr.istic.aco.editor.concreteMemento.SelectionMemento;
 import fr.istic.aco.editor.invoker.Invoker;
@@ -16,10 +17,14 @@ public class ChangeSelection implements Recordable {
 
     private Recorder recorder;
 
-    public ChangeSelection(Selection selection, Invoker invoker,Recorder recorder) {
+    private UndoManager undoManager;
+
+
+    public ChangeSelection(Selection selection, Invoker invoker,Recorder recorder, UndoManager undoManager) {
         this.selection = selection;
         this.invoker = invoker;
         this.recorder = recorder;
+        this.undoManager = undoManager;
     }
 
     @Override
@@ -27,6 +32,7 @@ public class ChangeSelection implements Recordable {
         selection.setEndIndex(invoker.getEndIndex());
         selection.setBeginIndex(invoker.getBeginIndex());
         recorder.save(this);
+        undoManager.store();
     }
 
     @Override
@@ -38,8 +44,8 @@ public class ChangeSelection implements Recordable {
     public void setMemento(Memento memento) {
         if (memento instanceof SelectionMemento) {
             SelectionMemento selectionMemento = (SelectionMemento) memento;
-            invoker.setBeginIndex(selectionMemento.getBeginIndex());
             invoker.setEndIndex(selectionMemento.getEndIndex());
+            invoker.setBeginIndex(selectionMemento.getBeginIndex());
         }
     }
 }

@@ -1,5 +1,8 @@
 package fr.istic.aco.editor.receiver;
 
+import fr.istic.aco.editor.concreteMemento.EditorMemento;
+import fr.istic.aco.editor.memento.Memento;
+
 /**
  * Main API for the text editing engine
  *
@@ -57,4 +60,8 @@ public interface Engine {
      * Removes the contents of the selection in the buffer
      */
     void delete();
+
+    void setMemento(Memento memento);
+
+    Memento getMemento();
 }

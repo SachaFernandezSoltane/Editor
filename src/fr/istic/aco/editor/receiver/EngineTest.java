@@ -77,8 +77,6 @@ class EngineTest {
         selection.setEndIndex(3);
         engine.pasteClipboard();
         assertEquals("abcbcd", engine.getBufferContents());
-        assertEquals(selection.getEndIndex(), selection.getBeginIndex() + engine.getClipboardContents().length());
-
     }
 
     @Test

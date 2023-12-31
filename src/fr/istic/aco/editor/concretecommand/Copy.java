@@ -1,5 +1,6 @@
 package fr.istic.aco.editor.concretecommand;
 
+import fr.istic.aco.editor.caretaker.UndoManager;
 import fr.istic.aco.editor.command.Command;
 import fr.istic.aco.editor.concreteMemento.InsertMemento;
 import fr.istic.aco.editor.memento.Memento;
@@ -13,15 +14,19 @@ public class Copy implements Command, Recordable {
 
     private Recorder recorder;
 
-    public Copy(EngineImpl engine, Recorder recorder) {
+    private UndoManager undoManager;
+
+    public Copy(EngineImpl engine, Recorder recorder, UndoManager undoManager) {
         this.engine = engine;
         this.recorder = recorder;
+        this.undoManager = undoManager;
     }
 
     @Override
     public void execute() {
         engine.copySelectedText();
         recorder.save(this);
+        //undoManager.store();
     }
 
     @Override

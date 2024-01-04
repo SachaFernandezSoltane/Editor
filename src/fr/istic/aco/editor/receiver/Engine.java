@@ -61,7 +61,16 @@ public interface Engine {
      */
     void delete();
 
+    /**
+     * * Change state of the engine using the memento
+     * @param memento
+     */
+
     void setMemento(Memento memento);
 
+    /**
+     * * Get the memento of the engine
+     * @return Memento
+     */
     Memento getMemento();
 }

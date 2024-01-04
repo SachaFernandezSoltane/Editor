@@ -19,21 +19,19 @@ public class UndoManager {
         this.engine = engine;
     }
 
-    //TODO: implement this method
     public void store() {
         pastStates.add(new EditorMemento(engine.getBufferContents(), engine.getSelection().getBeginIndex(), engine.getSelection().getEndIndex()));
     }
 
-    //TODO: implement this method
     public void undo() {
         if (pastStates.size() > 1) {
             EditorMemento previousState = pastStates.get(pastStates.size() - 2);
-            pastStates.remove(pastStates.size() - 1);
+            pastStates.removeLast();
             futureStates.add(new EditorMemento(engine.getBufferContents(), engine.getSelection().getBeginIndex(), engine.getSelection().getEndIndex()));
             engine.setMemento((Memento) previousState);
         } else if (pastStates.size() == 1) {
             EditorMemento newState = new EditorMemento("", 0, 0);
-            pastStates.remove(0);
+            pastStates.removeFirst();
             futureStates.add(new EditorMemento(engine.getBufferContents(), engine.getSelection().getBeginIndex(), engine.getSelection().getEndIndex()));
             engine.setMemento((Memento) newState);
             engine.getSelection().setBeginIndex(0);
@@ -44,13 +42,13 @@ public class UndoManager {
         }
     }
 
-    //TODO: implement this method
     public void redo() {
         if (!futureStates.isEmpty()) {
-            EditorMemento nextState = futureStates.get(futureStates.size() - 1);
-            futureStates.remove(futureStates.size() - 1);
+            EditorMemento nextState = futureStates.getLast();
+            futureStates.removeLast();
             pastStates.add(new EditorMemento(engine.getBufferContents(), engine.getSelection().getBeginIndex(), engine.getSelection().getEndIndex()));
-            //engine.setMemento((Memento)nextState);
+            engine.setMemento((Memento) nextState);
         }
     }
 }
+

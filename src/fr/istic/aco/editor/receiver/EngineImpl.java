@@ -104,14 +104,13 @@ public class EngineImpl implements Engine {
     }
 
     public Memento getMemento() {
-        return (Memento) new EditorMemento(buffer.toString(), selection.getBeginIndex(), selection.getEndIndex());
+        return new EditorMemento(buffer.toString(), selection.getBeginIndex(), selection.getEndIndex());
     }
 
     public void setMemento(Memento memento) {
-        if (memento instanceof EditorMemento) {
-            EditorMemento editorMemento = (EditorMemento) memento;
+        if (memento instanceof EditorMemento editorMemento) {
             if(!editorMemento.getBufferContent().contentEquals(buffer)){
-                if(editorMemento.getBufferContent().length() == 0)
+                if(editorMemento.getBufferContent().isEmpty())
                     buffer.delete(0, buffer.length());
                 else if(editorMemento.getBufferContent().length() > buffer.length())
                     buffer.append(editorMemento.getBufferContent().substring(buffer.length()));
@@ -119,8 +118,6 @@ public class EngineImpl implements Engine {
                     buffer.delete(editorMemento.getBufferContent().length(), buffer.length());
                 else if(editorMemento.getBufferContent().length() == buffer.length())
                     buffer.replace(0, buffer.length(), editorMemento.getBufferContent());
-            }else{
-                //buffer.replace(0, editorMemento.getEndIndex(), editorMemento.getBufferContent());
             }
             selection.setEndIndex(editorMemento.getEndIndex());
             selection.setBeginIndex(editorMemento.getBeginIndex());

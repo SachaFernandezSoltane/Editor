@@ -5,15 +5,13 @@ import fr.istic.aco.editor.command.Command;
 import fr.istic.aco.editor.invoker.Invoker;
 import fr.istic.aco.editor.receiver.EngineImpl;
 
-public class Undo implements Command {
-
+public class Redo implements Command {
     private UndoManager undoManager;
     private Invoker invoker;
     private EngineImpl engine;
 
 
-
-    public Undo(Invoker invoker,UndoManager undoManager,EngineImpl engine){
+    public Redo(Invoker invoker, UndoManager undoManager, EngineImpl engine) {
         this.undoManager = undoManager;
         this.invoker = invoker;
         this.engine = engine;
@@ -21,6 +19,7 @@ public class Undo implements Command {
 
     @Override
     public void execute() {
-        undoManager.undo();
+        undoManager.redo();
     }
 }
+

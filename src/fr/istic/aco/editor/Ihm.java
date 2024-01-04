@@ -1,5 +1,6 @@
 package fr.istic.aco.editor;
 
+import fr.istic.aco.editor.caretaker.UndoManager;
 import fr.istic.aco.editor.command.Command;
 import fr.istic.aco.editor.concretecommand.*;
 import fr.istic.aco.editor.invoker.Invoker;
@@ -19,6 +20,8 @@ public class Ihm {
   private Invoker invoker;
 
   private Recorder recorder;
+
+  private UndoManager undoManager;
   private Map<String, Command> mapCmd;
 
   public Ihm() {
@@ -28,12 +31,12 @@ public class Ihm {
     mapCmd = new HashMap<>();
     invoker = new Invoker(mapCmd);
 
-    mapCmd.put("changeSelection", new ChangeSelection(engine.getSelection(), invoker,recorder));
-    mapCmd.put("insert", new Insert(engine, invoker,recorder));
-    mapCmd.put("copy", new Copy(engine,recorder));
+    mapCmd.put("changeSelection", new ChangeSelection(engine.getSelection(), invoker,recorder,undoManager));
+    mapCmd.put("insert", new Insert(engine, invoker,recorder,undoManager));
+    mapCmd.put("copy", new Copy(engine,recorder,undoManager));
     mapCmd.put("delete", new Delete(engine, invoker,recorder));
     mapCmd.put("cut", new Cut(engine, invoker,recorder));
-    mapCmd.put("paste", new Paste(engine, invoker,recorder));
+    mapCmd.put("paste", new Paste(engine, invoker,recorder, undoManager));
 
   }
 

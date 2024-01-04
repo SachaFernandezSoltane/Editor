@@ -1,5 +1,8 @@
 package fr.istic.aco.editor.receiver;
 
+import fr.istic.aco.editor.concreteMemento.EditorMemento;
+import fr.istic.aco.editor.memento.Memento;
+
 public class EngineImpl implements Engine {
 
     private StringBuilder buffer = new StringBuilder();
@@ -88,6 +91,7 @@ public class EngineImpl implements Engine {
         selection.setEndIndex(selection.getBeginIndex() + s.length());
         selection.setBeginIndex(selection.getEndIndex());
     }
+
     /**
      * Removes the contents of the selection in the buffer
      */
@@ -97,5 +101,26 @@ public class EngineImpl implements Engine {
         int end = selection.getEndIndex();
         buffer.delete(begin, end);
         selection.setEndIndex(begin);
+    }
+
+    public Memento getMemento() {
+        return new EditorMemento(buffer.toString(), selection.getBeginIndex(), selection.getEndIndex());
+    }
+
+    public void setMemento(Memento memento) {
+        if (memento instanceof EditorMemento editorMemento) {
+            if(!editorMemento.getBufferContent().contentEquals(buffer)){
+                if(editorMemento.getBufferContent().isEmpty())
+                    buffer.delete(0, buffer.length());
+                else if(editorMemento.getBufferContent().length() > buffer.length())
+                    buffer.append(editorMemento.getBufferContent().substring(buffer.length()));
+                else if(editorMemento.getBufferContent().length() < buffer.length())
+                    buffer.delete(editorMemento.getBufferContent().length(), buffer.length());
+                else if(editorMemento.getBufferContent().length() == buffer.length())
+                    buffer.replace(0, buffer.length(), editorMemento.getBufferContent());
+            }
+            selection.setEndIndex(editorMemento.getEndIndex());
+            selection.setBeginIndex(editorMemento.getBeginIndex());
+        }
     }
 }

@@ -4,6 +4,7 @@ import fr.istic.aco.editor.command.Command;
 import fr.istic.aco.editor.concretecommand.*;
 import fr.istic.aco.editor.invoker.Invoker;
 import fr.istic.aco.editor.receiver.EngineImpl;
+import fr.istic.aco.editor.receiver.Recorder;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -16,20 +17,23 @@ public class Ihm {
   private Scanner scanner;
   private EngineImpl engine;
   private Invoker invoker;
+
+  private Recorder recorder;
   private Map<String, Command> mapCmd;
 
   public Ihm() {
     this.scanner = new Scanner(System.in);
     engine = new EngineImpl();
+    recorder = new Recorder();
     mapCmd = new HashMap<>();
     invoker = new Invoker(mapCmd);
 
-    mapCmd.put("changeSelection", new ChangeSelection(engine.getSelection(), invoker));
-    mapCmd.put("insert", new Insert(engine, invoker));
-    mapCmd.put("copy", new Copy(engine));
-    mapCmd.put("delete", new Delete(engine, invoker));
-    mapCmd.put("cut", new Cut(engine, invoker));
-    mapCmd.put("paste", new Paste(engine, invoker));
+    mapCmd.put("changeSelection", new ChangeSelection(engine.getSelection(), invoker,recorder));
+    mapCmd.put("insert", new Insert(engine, invoker,recorder));
+    mapCmd.put("copy", new Copy(engine,recorder));
+    mapCmd.put("delete", new Delete(engine, invoker,recorder));
+    mapCmd.put("cut", new Cut(engine, invoker,recorder));
+    mapCmd.put("paste", new Paste(engine, invoker,recorder));
 
   }
 

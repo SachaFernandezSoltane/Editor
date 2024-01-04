@@ -13,6 +13,6 @@ public class Replay implements Command {
 
     @Override
     public void execute() {
-
+        recorder.replay();
     }
 }

@@ -13,6 +13,6 @@ public class Start implements Command {
 
     @Override
     public void execute() {
-
+        recorder.start();
     }
 }

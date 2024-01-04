@@ -5,6 +5,7 @@ import fr.istic.aco.editor.invoker.Invoker;
 import fr.istic.aco.editor.memento.Memento;
 import fr.istic.aco.editor.receiver.EngineImpl;
 import fr.istic.aco.editor.receiver.Recordable;
+import fr.istic.aco.editor.receiver.Recorder;
 
 public class Delete implements Recordable {
 
@@ -12,9 +13,12 @@ public class Delete implements Recordable {
 
     private EngineImpl engine;
 
-    public Delete(EngineImpl engine, Invoker invoker) {
+    private Recorder recorder;
+
+    public Delete(EngineImpl engine, Invoker invoker,Recorder recorder) {
         this.engine = engine;
         this.invoker = invoker;
+        this.recorder = recorder;
     }
 
     @Override
@@ -22,6 +26,7 @@ public class Delete implements Recordable {
         engine.delete();
         invoker.setBeginIndex(engine.getSelection().getBeginIndex());
         invoker.setEndIndex(engine.getSelection().getEndIndex());
+        recorder.save(this);
     }
 
     @Override

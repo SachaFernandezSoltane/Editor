@@ -181,7 +181,7 @@ public class ConcreteMementoTestRedo {
         assertEquals("est", engine.getBufferContents());
         invoker.playCommand("stop");
         invoker.playCommand("replay");
-        assertEquals("estestt", engine.getBufferContents());
+        assertEquals("estest", engine.getBufferContents());
     }
 
     @Test
@@ -194,6 +194,6 @@ public class ConcreteMementoTestRedo {
         assertEquals("Test",engine.getBufferContents());
         invoker.playCommand("stop");
         invoker.playCommand("replay");
-        assertEquals("",engine.getBufferContents());
+        assertEquals("TestTest",engine.getBufferContents());
     }
 }

@@ -47,7 +47,7 @@ public class ConcreteMementoTestInsert {
         mapCmd.put("stop", new Stop(recorder));
         mapCmd.put("replay", new Replay(recorder));
         mapCmd.put("undo", new Undo(invoker,undoManager,engine,recorder));
-        mapCmd.put("redo", new Redo(invoker,undoManager,engine));
+        mapCmd.put("redo", new Redo(invoker,undoManager,engine,recorder));
     }
 
     @Test

@@ -45,7 +45,7 @@ public class Ihm {
     mapCmd.put("stop", new Stop(recorder));
     mapCmd.put("replay", new Replay(recorder));
     mapCmd.put("undo", new Undo(invoker,undoManager,engine,recorder));
-    mapCmd.put("redo", new Redo(invoker,undoManager,engine));
+    mapCmd.put("redo", new Redo(invoker,undoManager,engine,recorder));
   }
 
   public void start() {
@@ -55,15 +55,15 @@ public class Ihm {
     System.out.println();
     System.out.println(
             "  ______     _  _  _              ___    ___  ___   ____  \n" +
-            " |  ____|   | |(_)| |            |__ \\  / _ \\|__ \\ |___ \\ \n" +
-            " | |__    __| | _ | |_  ___   _ __  ) || | | |  ) |  __) |\n" +
-            " |  __|  / _` || || __|/ _ \\ | '__|/ / | | | | / /  |__ < \n" +
-            " | |____| (_| || || |_| (_) || |  / /_ | |_| |/ /_  ___) |\n" +
-            " |______|\\__,_||_| \\__|\\___/ |_| |____| \\___/|____||____/");
+                    " |  ____|   | |(_)| |            |__ \\  / _ \\|__ \\ |___ \\ \n" +
+                    " | |__    __| | _ | |_  ___   _ __  ) || | | |  ) |  __) |\n" +
+                    " |  __|  / _` || || __|/ _ \\ | '__|/ / | | | | / /  |__ < \n" +
+                    " | |____| (_| || || |_| (_) || |  / /_ | |_| |/ /_  ___) |\n" +
+                    " |______|\\__,_||_| \\__|\\___/ |_| |____| \\___/|____||____/");
     System.out.println();
     System.out.println("Les commandes disponibles sont :");
     System.out.println();
-    System.out.println("i : insérer texte\ns : sélectionner texte\nc : copier sélection\nv : coller\nx : couper sélection\nd : supprimer sélection\nexit : sortie de l'éditeur");
+    System.out.println("i : insérer texte\ns : sélectionner texte\nc : copier sélection\nv : coller\nx : couper sélection\nd : supprimer sélection\nstart : démarrer l'enregistrement\nstop : stopper l'enregistrement\nreplay : rejouer l'enregistrement\nundo : annule la commande précédente\nredo : annule le undo précédent\nexit : sortie de l'éditeur");
     System.out.println();
 
     while (choice) {
@@ -145,6 +145,37 @@ public class Ihm {
           System.out.println("Nouveau contenu : " + engine.getBufferContents());
           System.out.println("Position des bornes de sélection : [" + invoker.getBeginIndex() + ";" + invoker.getEndIndex() + "]");
         }
+        case "start" -> {
+          System.out.println();
+          invoker.playCommand("start");
+          System.out.println("Démarrage de l'enregistrement des commandes");
+        }
+        case "stop" -> {
+          System.out.println();
+          invoker.playCommand("stop");
+          System.out.println("Arret de l'enregistement des commandes");
+        }
+        case "replay" -> {
+          System.out.println();
+          invoker.playCommand("replay");
+          System.out.println("Les commandes ont été rejouées");
+          System.out.println("Nouveau contenu : " + engine.getBufferContents());
+          System.out.println("Nouvelles positions des bornes de sélection : [" + invoker.getBeginIndex() + ";" + invoker.getEndIndex() + "]");
+        }
+        case "undo" -> {
+          System.out.println();
+          invoker.playCommand("undo");
+          System.out.println("La commande précédente a bien été annulée");
+          System.out.println("Nouveau contenu : " + engine.getBufferContents());
+          System.out.println("Position des bornes de sélection : [" + invoker.getBeginIndex() + ";" + invoker.getEndIndex() + "]");
+        }
+        case "redo" -> {
+          System.out.println();
+          invoker.playCommand("redo");
+          System.out.println("Le undo précedemment effectué a été annulé");
+          System.out.println("Nouveau contenu : " + engine.getBufferContents());
+          System.out.println("Position des bornes de sélection : [" + invoker.getBeginIndex() + ";" + invoker.getEndIndex() + "]");
+        }
         case "exit" -> {
           System.out.println("Sortie de l'éditeur...");
           choice = false;
@@ -153,6 +184,7 @@ public class Ihm {
       }
     }
   }
+
   public static void main(String[] args) {
     Ihm ihm = new Ihm();
     ihm.start();

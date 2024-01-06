@@ -47,7 +47,7 @@ public class ConcreteMementoTestUndo {
         mapCmd.put("stop", new Stop(recorder));
         mapCmd.put("replay", new Replay(recorder));
         mapCmd.put("undo", new Undo(invoker,undoManager,engine,recorder));
-        mapCmd.put("redo", new Redo(invoker,undoManager,engine));
+        mapCmd.put("redo", new Redo(invoker,undoManager,engine,recorder));
     }
 
     @Test
@@ -144,19 +144,66 @@ public class ConcreteMementoTestUndo {
         assertEquals("",engine.getBufferContents());
     }
 
-//    @Test
-//    public void testUndoReplayDelete(){
-//        invoker.playCommand("start");
-//        invoker.setText("Test");
-//        invoker.playCommand("insert");
-//        invoker.setBeginIndex(2);
-//        invoker.setEndIndex(4);
-//        invoker.playCommand("changeSelection");
-//        invoker.playCommand("delete");
-//        invoker.playCommand("undo");
-//        assertEquals("Test",engine.getBufferContents());
-//        invoker.playCommand("stop");
-//        invoker.playCommand("replay");
-//        assertEquals("Testst",engine.getBufferContents());
-//    }
+    @Test
+    public void testUndoReplayDelete(){
+        invoker.playCommand("start");
+        invoker.setText("Test");
+        invoker.playCommand("insert");
+        invoker.setBeginIndex(2);
+        invoker.setEndIndex(4);
+        invoker.playCommand("changeSelection");
+        invoker.playCommand("delete");
+        invoker.playCommand("undo");
+        assertEquals("Test",engine.getBufferContents());
+        invoker.setBeginIndex(4);
+        invoker.setEndIndex(4);
+        invoker.playCommand("changeSelection");
+        invoker.playCommand("stop");
+        invoker.playCommand("replay");
+        assertEquals("TeTestst",engine.getBufferContents());
+    }
+
+    @Test
+    public void testUndoReplayCopyPaste(){
+        invoker.playCommand("start");
+        invoker.setText("Test");
+        invoker.playCommand("insert");
+        invoker.setBeginIndex(2);
+        invoker.setEndIndex(4);
+        invoker.playCommand("changeSelection");
+        invoker.playCommand("copy");
+        invoker.setBeginIndex(4);
+        invoker.setEndIndex(4);
+        invoker.playCommand("changeSelection");
+        invoker.playCommand("paste");
+        invoker.playCommand("undo");
+        assertEquals("Test",engine.getBufferContents());
+        invoker.playCommand("stop");
+        invoker.playCommand("replay");
+        assertEquals("TeststTe",engine.getBufferContents());
+    }
+
+    @Test
+    public void testUndoReplayCutPaste(){
+        invoker.playCommand("start");
+        invoker.setText("Test");
+        invoker.playCommand("insert");
+        invoker.setBeginIndex(2);
+        invoker.setEndIndex(4);
+        invoker.playCommand("changeSelection");
+        invoker.playCommand("cut");
+        invoker.setBeginIndex(0);
+        invoker.setEndIndex(2);
+        invoker.playCommand("changeSelection");
+        invoker.playCommand("paste");
+        assertEquals("st",engine.getBufferContents());
+        invoker.playCommand("undo");
+        assertEquals("Te",engine.getBufferContents());
+        invoker.playCommand("stop");
+        invoker.setBeginIndex(2);
+        invoker.setEndIndex(2);
+        invoker.playCommand("changeSelection");
+        invoker.playCommand("replay");
+        assertEquals("Test",engine.getBufferContents());
+    }
 }

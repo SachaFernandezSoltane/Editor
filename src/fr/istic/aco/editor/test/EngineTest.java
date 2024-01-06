@@ -1,5 +1,8 @@
-package fr.istic.aco.editor.receiver;
+package fr.istic.aco.editor.test;
 
+import fr.istic.aco.editor.receiver.Engine;
+import fr.istic.aco.editor.receiver.EngineImpl;
+import fr.istic.aco.editor.receiver.Selection;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -13,10 +16,6 @@ class EngineTest {
     @BeforeEach
     void setUp() {
         engine = new EngineImpl();
-    }
-
-    private void todo() {
-        fail("Unimplemented test");
     }
 
     @Test

@@ -26,7 +26,6 @@ public class Copy implements Command, Recordable {
     public void execute() {
         engine.copySelectedText();
         recorder.save(this);
-        //undoManager.store();
     }
 
     @Override

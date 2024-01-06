@@ -1,8 +1,9 @@
-package fr.istic.aco.editor.concretecommand;
+package fr.istic.aco.editor.test;
 
 import fr.istic.aco.editor.caretaker.UndoManager;
 import fr.istic.aco.editor.command.Command;
 import fr.istic.aco.editor.concreteMemento.EditorMemento;
+import fr.istic.aco.editor.concretecommand.*;
 import fr.istic.aco.editor.invoker.Invoker;
 import fr.istic.aco.editor.receiver.EngineImpl;
 import fr.istic.aco.editor.receiver.Recorder;
@@ -42,8 +43,8 @@ public class ConcreteCommandTest {
         mapCmd.put("changeSelection", new ChangeSelection(engine.getSelection(), invoker,recorder,undoManager));
         mapCmd.put("insert", new Insert(engine, invoker,recorder,undoManager));
         mapCmd.put("copy", new Copy(engine,recorder,undoManager));
-        mapCmd.put("delete", new Delete(engine, invoker,recorder));
-        mapCmd.put("cut", new Cut(engine, invoker,recorder));
+        mapCmd.put("delete", new Delete(engine, invoker,recorder,undoManager));
+        mapCmd.put("cut", new Cut(engine, invoker,recorder,undoManager));
         mapCmd.put("paste", new Paste(engine, invoker,recorder, undoManager));
     }
 
@@ -128,6 +129,21 @@ public class ConcreteCommandTest {
         invoker.playCommand("changeSelection");
         invoker.playCommand("copy");
         assertEquals("es", engine.getClipboardContents());
+    }
+
+    @Test
+    public void testCopyPaste(){
+        invoker.setText("Test");
+        invoker.playCommand("insert");
+        invoker.setBeginIndex(1);
+        invoker.setEndIndex(3);
+        invoker.playCommand("changeSelection");
+        invoker.playCommand("copy");
+        invoker.setBeginIndex(2);
+        invoker.setEndIndex(4);
+        invoker.playCommand("changeSelection");
+        invoker.playCommand("paste");
+        assertEquals("Tees", engine.getBufferContents());
     }
 
     @Test

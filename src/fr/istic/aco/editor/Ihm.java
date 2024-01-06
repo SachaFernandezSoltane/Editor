@@ -2,14 +2,13 @@ package fr.istic.aco.editor;
 
 import fr.istic.aco.editor.caretaker.UndoManager;
 import fr.istic.aco.editor.command.Command;
+import fr.istic.aco.editor.concreteMemento.EditorMemento;
 import fr.istic.aco.editor.concretecommand.*;
 import fr.istic.aco.editor.invoker.Invoker;
 import fr.istic.aco.editor.receiver.EngineImpl;
 import fr.istic.aco.editor.receiver.Recorder;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
 
 public class Ihm {
 
@@ -24,23 +23,32 @@ public class Ihm {
   private UndoManager undoManager;
   private Map<String, Command> mapCmd;
 
+  private List<EditorMemento> pastStates = new ArrayList<>();
+  private List<EditorMemento> futureStates = new ArrayList<>();
+
   public Ihm() {
     this.scanner = new Scanner(System.in);
     engine = new EngineImpl();
     recorder = new Recorder();
     mapCmd = new HashMap<>();
     invoker = new Invoker(mapCmd);
+    undoManager = new UndoManager(pastStates,futureStates,engine);
 
-    mapCmd.put("changeSelection", new ChangeSelection(engine.getSelection(), invoker,recorder,undoManager));
-    mapCmd.put("insert", new Insert(engine, invoker,recorder,undoManager));
-    mapCmd.put("copy", new Copy(engine,recorder,undoManager));
-    mapCmd.put("delete", new Delete(engine, invoker,recorder));
-    mapCmd.put("cut", new Cut(engine, invoker,recorder));
-    mapCmd.put("paste", new Paste(engine, invoker,recorder, undoManager));
 
+    mapCmd.put("changeSelection", new ChangeSelection(engine.getSelection(), invoker, recorder,undoManager));
+    mapCmd.put("insert", new Insert(engine, invoker, recorder,undoManager));
+    mapCmd.put("copy", new Copy(engine, recorder,undoManager));
+    mapCmd.put("delete", new Delete(engine, invoker, recorder,undoManager));
+    mapCmd.put("cut", new Cut(engine, invoker, recorder,undoManager));
+    mapCmd.put("paste", new Paste(engine, invoker, recorder,undoManager));
+    mapCmd.put("start", new Start(recorder));
+    mapCmd.put("stop", new Stop(recorder));
+    mapCmd.put("replay", new Replay(recorder));
+    mapCmd.put("undo", new Undo(invoker,undoManager,engine,recorder));
+    mapCmd.put("redo", new Redo(invoker,undoManager,engine));
   }
 
-  public void start() { //TODO fix le souci d'insert avec plusieurs char déja sélectionnés.
+  public void start() {
     boolean choice = true;
 
     System.out.println("Bienvenue dans l'éditeur de texte !");

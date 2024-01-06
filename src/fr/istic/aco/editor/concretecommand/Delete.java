@@ -1,5 +1,6 @@
 package fr.istic.aco.editor.concretecommand;
 
+import fr.istic.aco.editor.caretaker.UndoManager;
 import fr.istic.aco.editor.command.Command;
 import fr.istic.aco.editor.invoker.Invoker;
 import fr.istic.aco.editor.memento.Memento;
@@ -15,10 +16,14 @@ public class Delete implements Recordable {
 
     private Recorder recorder;
 
-    public Delete(EngineImpl engine, Invoker invoker,Recorder recorder) {
+    private UndoManager undoManager;
+
+
+    public Delete(EngineImpl engine, Invoker invoker,Recorder recorder,UndoManager undoManager) {
         this.engine = engine;
         this.invoker = invoker;
         this.recorder = recorder;
+        this.undoManager = undoManager;
     }
 
     @Override
@@ -27,6 +32,7 @@ public class Delete implements Recordable {
         invoker.setBeginIndex(engine.getSelection().getBeginIndex());
         invoker.setEndIndex(engine.getSelection().getEndIndex());
         recorder.save(this);
+        undoManager.store();
     }
 
     @Override

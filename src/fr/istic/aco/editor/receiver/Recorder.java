@@ -3,7 +3,6 @@ package fr.istic.aco.editor.receiver;
 import fr.istic.aco.editor.command.Command;
 import fr.istic.aco.editor.concreteMemento.InsertMemento;
 import fr.istic.aco.editor.memento.Memento;
-import org.hamcrest.core.CombinableMatcher;
 
 import java.util.ArrayList;
 import java.util.List;

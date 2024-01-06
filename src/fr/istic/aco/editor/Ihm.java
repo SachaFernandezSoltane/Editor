@@ -63,7 +63,7 @@ public class Ihm {
     System.out.println();
     System.out.println("Les commandes disponibles sont :");
     System.out.println();
-    System.out.println("i : insérer texte\ns : sélectionner texte\nc : copier sélection\nv : coller\nx : couper sélection\nd : supprimer sélection\nstart : démarrer l'enregistrement\nstop : stopper l'enregistrement\nreplay : rejouer l'enregistrement\nundo : annule la commande précédente\nredo : annule le undo précédent\nexit : sortie de l'éditeur");
+    System.out.println("b : voir les infos de l'éditeur\ni : insérer texte\ns : sélectionner texte\nc : copier sélection\nv : coller\nx : couper sélection\nd : supprimer sélection\nstart : démarrer l'enregistrement\nstop : stopper l'enregistrement\nreplay : rejouer l'enregistrement\nundo : annule la commande précédente\nredo : annule le undo précédent\nexit : sortie de l'éditeur");
     System.out.println();
 
     while (choice) {
@@ -145,6 +145,12 @@ public class Ihm {
           System.out.println("Nouveau contenu : " + engine.getBufferContents());
           System.out.println("Position des bornes de sélection : [" + invoker.getBeginIndex() + ";" + invoker.getEndIndex() + "]");
         }
+        case "b" -> {
+          System.out.println();
+          System.out.println("Contenu du buffer : " + engine.getBufferContents());
+          System.out.println("Contenu du clipboard : " + engine.getClipboardContents());
+          System.out.println("Position des bornes de sélection : [" + invoker.getBeginIndex() + ";" + invoker.getEndIndex() + "]");
+        }
         case "start" -> {
           System.out.println();
           invoker.playCommand("start");
@@ -167,14 +173,14 @@ public class Ihm {
           invoker.playCommand("undo");
           System.out.println("La commande précédente a bien été annulée");
           System.out.println("Nouveau contenu : " + engine.getBufferContents());
-          System.out.println("Position des bornes de sélection : [" + invoker.getBeginIndex() + ";" + invoker.getEndIndex() + "]");
+          System.out.println("Position des bornes de sélection : [" + engine.getSelection().getBeginIndex() + ";" + engine.getSelection().getEndIndex() + "]");
         }
         case "redo" -> {
           System.out.println();
           invoker.playCommand("redo");
           System.out.println("Le undo précedemment effectué a été annulé");
           System.out.println("Nouveau contenu : " + engine.getBufferContents());
-          System.out.println("Position des bornes de sélection : [" + invoker.getBeginIndex() + ";" + invoker.getEndIndex() + "]");
+          System.out.println("Position des bornes de sélection : [" + engine.getSelection().getBeginIndex() + ";" + engine.getSelection().getBeginIndex() + "]");
         }
         case "exit" -> {
           System.out.println("Sortie de l'éditeur...");

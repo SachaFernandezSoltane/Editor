@@ -34,7 +34,7 @@ public class ConcreteMementoTestCutPaste {
         engine = new EngineImpl();
         mapCmd = new HashMap<>();
         recorder = new Recorder();
-        undoManager = new UndoManager(pastStates,futureStates,engine);
+        undoManager = new UndoManager(pastStates,futureStates,engine,recorder);
         invoker = new Invoker(mapCmd);
 
         mapCmd.put("changeSelection", new ChangeSelection(engine.getSelection(), invoker, recorder,undoManager));
@@ -46,8 +46,8 @@ public class ConcreteMementoTestCutPaste {
         mapCmd.put("start", new Start(recorder));
         mapCmd.put("stop", new Stop(recorder));
         mapCmd.put("replay", new Replay(recorder));
-        mapCmd.put("undo", new Undo(invoker,undoManager,engine,recorder));
-        mapCmd.put("redo", new Redo(invoker,undoManager,engine,recorder));
+        mapCmd.put("undo", new Undo(invoker,undoManager,engine));
+        mapCmd.put("redo", new Redo(invoker,undoManager,engine));
     }
     @Test
     public void testCut() {

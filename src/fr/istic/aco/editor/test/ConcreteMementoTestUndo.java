@@ -34,7 +34,7 @@ public class ConcreteMementoTestUndo {
         engine = new EngineImpl();
         mapCmd = new HashMap<>();
         recorder = new Recorder();
-        undoManager = new UndoManager(pastStates,futureStates,engine);
+        undoManager = new UndoManager(pastStates,futureStates,engine,recorder);
         invoker = new Invoker(mapCmd);
 
         mapCmd.put("changeSelection", new ChangeSelection(engine.getSelection(), invoker, recorder,undoManager));
@@ -46,8 +46,8 @@ public class ConcreteMementoTestUndo {
         mapCmd.put("start", new Start(recorder));
         mapCmd.put("stop", new Stop(recorder));
         mapCmd.put("replay", new Replay(recorder));
-        mapCmd.put("undo", new Undo(invoker,undoManager,engine,recorder));
-        mapCmd.put("redo", new Redo(invoker,undoManager,engine,recorder));
+        mapCmd.put("undo", new Undo(invoker,undoManager,engine));
+        mapCmd.put("redo", new Redo(invoker,undoManager,engine));
     }
 
     @Test
@@ -139,9 +139,10 @@ public class ConcreteMementoTestUndo {
         invoker.setText("Test");
         invoker.playCommand("insert");
         invoker.playCommand("undo");
+        assertEquals("",engine.getBufferContents());
         invoker.playCommand("stop");
         invoker.playCommand("replay");
-        assertEquals("",engine.getBufferContents());
+        assertEquals("Test",engine.getBufferContents());
     }
 
     @Test
@@ -155,12 +156,12 @@ public class ConcreteMementoTestUndo {
         invoker.playCommand("delete");
         invoker.playCommand("undo");
         assertEquals("Test",engine.getBufferContents());
-        invoker.setBeginIndex(4);
-        invoker.setEndIndex(4);
+        invoker.setBeginIndex(2);
+        invoker.setEndIndex(2);
         invoker.playCommand("changeSelection");
         invoker.playCommand("stop");
         invoker.playCommand("replay");
-        assertEquals("TeTestst",engine.getBufferContents());
+        assertEquals("Testst",engine.getBufferContents());
     }
 
     @Test
@@ -180,8 +181,9 @@ public class ConcreteMementoTestUndo {
         assertEquals("Test",engine.getBufferContents());
         invoker.playCommand("stop");
         invoker.playCommand("replay");
-        assertEquals("TeststTe",engine.getBufferContents());
+        assertEquals("TeststTest",engine.getBufferContents());
     }
+
 
     @Test
     public void testUndoReplayCutPaste(){

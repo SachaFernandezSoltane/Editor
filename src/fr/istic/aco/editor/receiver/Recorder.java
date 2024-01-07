@@ -35,6 +35,10 @@ public class Recorder {
         isReplaying = false;
     }
 
+    public boolean isReplaying() {
+        return isReplaying;
+    }
+
     public void start() {
         isRecording = true;
     }

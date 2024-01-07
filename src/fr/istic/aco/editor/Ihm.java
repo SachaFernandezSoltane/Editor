@@ -32,7 +32,7 @@ public class Ihm {
     recorder = new Recorder();
     mapCmd = new HashMap<>();
     invoker = new Invoker(mapCmd);
-    undoManager = new UndoManager(pastStates,futureStates,engine);
+    undoManager = new UndoManager(pastStates,futureStates,engine,recorder);
 
 
     mapCmd.put("changeSelection", new ChangeSelection(engine.getSelection(), invoker, recorder,undoManager));
@@ -44,8 +44,8 @@ public class Ihm {
     mapCmd.put("start", new Start(recorder));
     mapCmd.put("stop", new Stop(recorder));
     mapCmd.put("replay", new Replay(recorder));
-    mapCmd.put("undo", new Undo(invoker,undoManager,engine,recorder));
-    mapCmd.put("redo", new Redo(invoker,undoManager,engine,recorder));
+    mapCmd.put("undo", new Undo(invoker,undoManager,engine));
+    mapCmd.put("redo", new Redo(invoker,undoManager,engine));
   }
 
   public void start() {

@@ -8,36 +8,21 @@ import fr.istic.aco.editor.receiver.EngineImpl;
 import fr.istic.aco.editor.receiver.Recordable;
 import fr.istic.aco.editor.receiver.Recorder;
 
-public class Undo implements Recordable {
+public class Undo implements Command {
 
     private UndoManager undoManager;
     private Invoker invoker;
     private EngineImpl engine;
 
-    private Recorder recorder;
 
-
-
-    public Undo(Invoker invoker,UndoManager undoManager,EngineImpl engine,Recorder recorder){
+    public Undo(Invoker invoker,UndoManager undoManager,EngineImpl engine){
         this.undoManager = undoManager;
         this.invoker = invoker;
         this.engine = engine;
-        this.recorder = recorder;
     }
 
     @Override
     public void execute() {
         undoManager.undo();
-        recorder.save(this);
-    }
-
-    @Override
-    public Memento getMemento() {
-        return null;
-    }
-
-    @Override
-    public void setMemento(Memento memento) {
-
     }
 }

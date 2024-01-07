@@ -3,24 +3,31 @@ package fr.istic.aco.editor.caretaker;
 import fr.istic.aco.editor.concreteMemento.EditorMemento;
 import fr.istic.aco.editor.memento.Memento;
 import fr.istic.aco.editor.receiver.Engine;
+import fr.istic.aco.editor.receiver.Recorder;
 
 import java.util.List;
 
 public class UndoManager {
+
+    private Recorder recorder;
     private List<EditorMemento> pastStates;
 
     private List<EditorMemento> futureStates;
 
     private Engine engine;
 
-    public UndoManager(List<EditorMemento> pastStates, List<EditorMemento> futureStates, Engine engine) {
+    public UndoManager(List<EditorMemento> pastStates, List<EditorMemento> futureStates, Engine engine,Recorder recorder){
+        this.recorder = recorder;
         this.pastStates = pastStates;
         this.futureStates = futureStates;
         this.engine = engine;
     }
 
     public void store() {
-        pastStates.add(new EditorMemento(engine.getBufferContents(), engine.getSelection().getBeginIndex(), engine.getSelection().getEndIndex()));
+        boolean isReplayingValue = recorder.isReplaying();
+        if(!isReplayingValue){
+            pastStates.add(new EditorMemento(engine.getBufferContents(), engine.getSelection().getBeginIndex(), engine.getSelection().getEndIndex()));
+        }
     }
 
     public void undo() {

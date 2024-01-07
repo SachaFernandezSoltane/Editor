@@ -37,7 +37,7 @@ public class ConcreteCommandTest {
         engine = new EngineImpl();
         mapCmd = new HashMap<>();
         recorder = new Recorder();
-        undoManager = new UndoManager(pastStates,futureStates,engine);
+        undoManager = new UndoManager(pastStates,futureStates,engine,recorder);
         invoker = new Invoker(mapCmd);
 
         mapCmd.put("changeSelection", new ChangeSelection(engine.getSelection(), invoker,recorder,undoManager));

@@ -1,7 +1,7 @@
 package fr.istic.aco.editor.test;
 
-import fr.istic.aco.editor.receiver.Engine;
-import fr.istic.aco.editor.receiver.EngineImpl;
+import fr.istic.aco.editor.originator.Engine;
+import fr.istic.aco.editor.originator.EngineImpl;
 import fr.istic.aco.editor.receiver.Selection;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

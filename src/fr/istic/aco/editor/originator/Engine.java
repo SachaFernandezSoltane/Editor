@@ -1,7 +1,8 @@
-package fr.istic.aco.editor.receiver;
+package fr.istic.aco.editor.originator;
 
 import fr.istic.aco.editor.concreteMemento.EditorMemento;
 import fr.istic.aco.editor.memento.Memento;
+import fr.istic.aco.editor.receiver.Selection;
 
 /**
  * Main API for the text editing engine

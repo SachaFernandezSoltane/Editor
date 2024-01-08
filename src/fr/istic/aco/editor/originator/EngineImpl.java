@@ -1,7 +1,9 @@
-package fr.istic.aco.editor.receiver;
+package fr.istic.aco.editor.originator;
 
 import fr.istic.aco.editor.concreteMemento.EditorMemento;
 import fr.istic.aco.editor.memento.Memento;
+import fr.istic.aco.editor.receiver.Selection;
+import fr.istic.aco.editor.receiver.SelectionImpl;
 
 public class EngineImpl implements Engine {
 

@@ -1,4 +1,4 @@
-package fr.istic.aco.editor.receiver;
+package fr.istic.aco.editor.originator;
 
 import fr.istic.aco.editor.memento.Memento;
 

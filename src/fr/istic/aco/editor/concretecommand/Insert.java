@@ -4,7 +4,7 @@ import fr.istic.aco.editor.caretaker.UndoManager;
 import fr.istic.aco.editor.concreteMemento.InsertMemento;
 import fr.istic.aco.editor.invoker.Invoker;
 import fr.istic.aco.editor.memento.Memento;
-import fr.istic.aco.editor.receiver.EngineImpl;
+import fr.istic.aco.editor.originator.EngineImpl;
 import fr.istic.aco.editor.receiver.Recordable;
 import fr.istic.aco.editor.receiver.Recorder;
 

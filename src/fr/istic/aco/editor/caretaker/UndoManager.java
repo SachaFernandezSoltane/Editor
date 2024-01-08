@@ -2,7 +2,7 @@ package fr.istic.aco.editor.caretaker;
 
 import fr.istic.aco.editor.concreteMemento.EditorMemento;
 import fr.istic.aco.editor.memento.Memento;
-import fr.istic.aco.editor.receiver.Engine;
+import fr.istic.aco.editor.originator.Engine;
 import fr.istic.aco.editor.receiver.Recorder;
 
 import java.util.List;

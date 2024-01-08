@@ -20,33 +20,33 @@ public interface Engine {
     Selection getSelection();
 
     /**
-     * Provides the whole contents of the buffer, as a string
+     * Provides whole contents of the buffer, as a string
      * @return a copy of the buffer's contents
      */
     String getBufferContents();
 
     /**
-     * Provides the clipboard contents
+     * Provides clipboard contents
      * @return a copy of the clipboard's contents
      */
     String getClipboardContents();
 
     /**
-     * Removes the text within the interval
+     * Removes text within the interval
      * specified by the selection control object,
      * from the buffer.
      */
     void cutSelectedText();
 
     /**
-     * Copies the text within the interval
+     * Copies text within the interval
      * specified by the selection control object
      * into the clipboard.
      */
     void copySelectedText();
 
     /**
-     * Replaces the text within the interval specified by the selection object with
+     * Replaces text within the interval specified by the selection object with
      * the contents of the clipboard.
      */
     void pasteClipboard();
@@ -58,7 +58,7 @@ public interface Engine {
     void insert(String s);
 
     /**
-     * Removes the contents of the selection in the buffer
+     * Removes contents of the selection in the buffer
      */
     void delete();
 
@@ -70,7 +70,7 @@ public interface Engine {
     void setMemento(Memento memento);
 
     /**
-     * * Get the memento of the engine
+     * * Get memento of the engine
      * @return Memento
      */
     Memento getMemento();

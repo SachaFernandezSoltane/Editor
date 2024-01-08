@@ -4,28 +4,37 @@ public class Pair<Recordable, Memento> {
     private Recordable Recordable;
     private Memento memento;
 
-    // Constructeur
     public Pair(Recordable Recordable, Memento memento) {
         this.Recordable = Recordable;
         this.memento = memento;
     }
 
-    // Getter pour le premier élément
+    /**
+     * @return Recordable which is first element of the pair
+     */
     public Recordable getRecordable() {
         return Recordable;
     }
 
-    // Getter pour le deuxième élément
+    /**
+     * @return memento which is second element of the pair
+     */
     public Memento getMemento() {
         return memento;
     }
 
-    // Setter pour le premier élément
+    /**
+     * set Recordable with Recordable parameter
+     * @param Recordable the Recordable to set
+     */
     public void setFirst(Recordable Recordable) {
         this.Recordable = Recordable;
     }
 
-    // Setter pour le deuxième élément
+    /**
+     * set mememto with memento parameter
+     * @param memento the memento to set
+     */
     public void setSecond(Memento memento) {
         this.memento = memento;
     }

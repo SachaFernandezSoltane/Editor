@@ -7,6 +7,12 @@ import fr.istic.aco.editor.receiver.Recorder;
 
 import java.util.List;
 
+/**
+ * Caretaker for undo and redo operations
+ * @see Recorder
+ * @see EditorMemento
+ * @see Engine
+ */
 public class UndoManager {
 
     private Recorder recorder;
@@ -23,6 +29,9 @@ public class UndoManager {
         this.engine = engine;
     }
 
+    /**
+     * Stores current state of the editor
+     */
     public void store() {
         boolean isReplayingValue = recorder.isReplaying();
         if(!isReplayingValue){
@@ -30,6 +39,10 @@ public class UndoManager {
         }
     }
 
+    /**
+     * Restores the most recent state of the editor
+     * and stores current state in the redo stack
+     */
     public void undo() {
         if (pastStates.size() > 1) {
             EditorMemento previousState = pastStates.get(pastStates.size() - 2);
@@ -49,6 +62,10 @@ public class UndoManager {
         }
     }
 
+    /**
+     * Restores the most recent undone state of the editor
+     * and stores current state in the undo stack
+     */
     public void redo() {
         if (!futureStates.isEmpty()) {
             EditorMemento nextState = futureStates.getLast();

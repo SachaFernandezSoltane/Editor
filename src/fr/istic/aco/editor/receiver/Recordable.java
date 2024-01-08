@@ -6,10 +6,20 @@ import fr.istic.aco.editor.originator.Originator;
 
 public interface Recordable extends Command, Originator {
 
+    /**
+     * execute command to replay
+     */
     @Override
     void execute();
 
+    /**
+     * @return memento
+     */
     Memento getMemento();
 
+    /**
+     * set memento with memento parameter
+     * @param memento
+     */
     void setMemento(Memento memento);
 }

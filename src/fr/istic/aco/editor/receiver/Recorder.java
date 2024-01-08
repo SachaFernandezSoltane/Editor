@@ -18,12 +18,18 @@ public class Recorder {
         this.actionsList = new ArrayList<>();
     }
 
+    /**
+     * save the state of the recordable object
+     */
     public void save (Recordable recordable) {
         if (isRecording && !isReplaying){
             actionsList.add(new Pair<>(recordable, recordable.getMemento()));
         }
     }
 
+    /**
+     * replay the actions if the recorder is not recording
+     */
     public void replay() {
         isReplaying = true;
         if(isReplaying){
@@ -35,14 +41,23 @@ public class Recorder {
         isReplaying = false;
     }
 
+    /**
+     * @return true if the recorder is recording
+     */
     public boolean isReplaying() {
         return isReplaying;
     }
 
+    /**
+     * start recording
+     */
     public void start() {
         isRecording = true;
     }
 
+    /**
+     * stop recording
+     */
     public void stop() {
         isRecording = false;
     }

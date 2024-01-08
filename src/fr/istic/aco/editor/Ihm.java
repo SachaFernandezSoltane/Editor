@@ -10,6 +10,9 @@ import fr.istic.aco.editor.receiver.Recorder;
 
 import java.util.*;
 
+/**
+ * Created by Sacha Fernandez-Soltane and Paul Leclercq
+ */
 public class Ihm {
 
   private int beginIndex = 0;

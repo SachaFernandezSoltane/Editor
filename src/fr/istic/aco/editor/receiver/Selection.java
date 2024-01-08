@@ -9,7 +9,7 @@ package fr.istic.aco.editor.receiver;
 public interface Selection {
 
     /**
-     * Provides the index of the first character designated
+     * Provides index of the first character designated
      * by the selection.
      *
      * @return
@@ -17,23 +17,23 @@ public interface Selection {
     int getBeginIndex();
 
     /**
-     * Provides the index of the first character
+     * Provides index of the first character
      * after the last character designated
      * by the selection.
      *
-     * @return the end index
+     * @return end index
      */
     int getEndIndex();
 
     /**
-     * Provides the index of the first character in the buffer
+     * Provides index of the first character in the buffer
      *
      * @return the buffer's begin index
      */
     int getBufferBeginIndex();
 
     /**
-     * Provides the index of the first "virtual" character
+     * Provides index of the first "virtual" character
      * after the end of the buffer
      *
      * @return the post end buffer index
@@ -41,7 +41,7 @@ public interface Selection {
     int getBufferEndIndex();
 
     /**
-     * Changes the value of the begin index of the selection
+     * Changes value of the begin index of the selection
      *
      * @param beginIndex, must be within the buffer index range
      * @throws IndexOutOfBoundsException if the beginIndex is out of bounds
@@ -49,7 +49,7 @@ public interface Selection {
     void setBeginIndex(int beginIndex);
 
     /**
-     * Changes the value of the end index of the selection
+     * Changes value of the end index of the selection
      *
      * @param endIndex, must be within the buffer index range
      * @throws IndexOutOfBoundsException if the beginIndex is out of bounds

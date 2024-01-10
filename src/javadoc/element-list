@@ -1,0 +1,10 @@
+fr.istic.aco.editor
+fr.istic.aco.editor.caretaker
+fr.istic.aco.editor.command
+fr.istic.aco.editor.concretecommand
+fr.istic.aco.editor.concreteMemento
+fr.istic.aco.editor.invoker
+fr.istic.aco.editor.memento
+fr.istic.aco.editor.originator
+fr.istic.aco.editor.receiver
+fr.istic.aco.editor.test

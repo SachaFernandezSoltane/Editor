@@ -4,4 +4,4 @@ This project is a simple implementation of an editor like Word but working insid
 
 It is a school project for the course of Operating Systems at the University of Rennes 1.
 
-[![Anurag's GitHub stats](https://editor-eight-orpin.vercel.app/api?username=sachafernandezsoltane)](https://github.com/SachaFernandezSoltane/Editor.git)
+[![Anurag's GitHub stats](https://editor-git-main-sachafernandezsoltanegmailcoms-projects.vercel.app/api?username=sachafernandezsoltane)](https://github.com/SachaFernandezSoltane/Editor.git)
